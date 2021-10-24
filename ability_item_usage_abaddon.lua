@@ -21,10 +21,10 @@ end
 
 
 local castDCDesire = 0;
-local castACDesire = 0;
+local castASDesire = 0;
 local npcBot = nil;
 local abilityDC = nil;
-local abilityAC = nil;
+local abilityAS = nil;
 
 function AbilityUsageThink()
     if npcBot == nil then npcBot = GetBot(); end
@@ -32,14 +32,14 @@ function AbilityUsageThink()
     if mutil.CanNotUseAbility(npcBot) then return end
 
     if abilityDC == nil then abilityDC = npcBot:GetAbilityByName( "abaddon_death_coil" ) end
-    if abilityAC == nil then abilityAC = npcBot:GetAbilityByName( "abaddon_aphotic_shield" ) end
+    if abilityAS == nil then abilityAS = npcBot:GetAbilityByName( "abaddon_aphotic_shield" ) end
 
-    castACDesire, castACTarget = ConsiderAphoticShield();
+    castASDesire, castASTarget = ConsiderAphoticShield();
     castDCDesire, castDCTarget = ConsiderDeathCoil();
 
-    if ( castACDesire > 0 )
+    if ( castASDesire > 0 )
         then
-            npcBot:Action_UseAbilityOnEntity( abilityAC, castACTarget );
+            npcBot:Action_UseAbilityOnEntity( abilityAS, castASTarget );
             npcBot:ActionImmediate_Chat( "Pukul aku mas.", true );
         return;
     end
@@ -130,7 +130,7 @@ function ConsiderAphoticShield()
     end
 
     -- Get some of its values
-    local nCastRange = abilityAC:GetCastRange();
+    local nCastRange = abilityAS:GetCastRange();
 
     if mutil.IsRetreating(npcBot) and npcBot:WasRecentlyDamagedByAnyHero( 3.0 ) and npcBot:HasModifier('modifier_abaddon_aphotic_shield') ==    false
     then
